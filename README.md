@@ -2,7 +2,7 @@
 
 ### Instruction to Set up locally
 
-1 Run cmd (git clone )</br>
+1 Run cmd (git clone https://github.com/Nipunkhattri/Node-Postgres-CRUD.git)</br>
 2 Open folder</br>
 <ul>
 <li>Run cmd (npm install)</li>
