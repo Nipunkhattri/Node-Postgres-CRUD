@@ -1,35 +1,28 @@
-# Schedule_Task
+# CURD Operation Node js using Postgres Database
 
 ### Instruction to Set up locally
 
-1 Run cmd (git clone https://github.com/Nipunkhattri/schedule_Task.git)</br>
-2 Oen folder</br>
+1 Run cmd (git clone )</br>
+2 Open folder</br>
 <ul>
 <li>Run cmd (npm install)</li>
-<li>Create .env and gave the MongoDB Url and secret key</li>
+<li>Create .env and gave the Postgres database Url and secret key</li>
 <li>Run cmd (nodemon ./server.js)</li>
 </ul>
-Now you can check the Api in Postman .
-Live Backend Link - http://shedule-task.onrender.com/ (You can use it to run in postman)
-
-https://www.postman.com/crimson-space-139196/workspace/public/collection/20884288-dbd36374-0b6f-4f94-b6c1-a9c799546bd4?action=share&creator=20884288
-
 
 ### Create RESTful endpoints for the API using Node JS
-1. Create a new task
-2. Retrieve a list of all tasks
-3. Retrieve a single task by ID
-4. Update an existing task (including marking as completed)
-5. Delete a task by ID
-6. User Authentication
-7. Task Status
-8. Get Task of Same Catagories
+1. Create a new Product
+2. Retrieve a list of all Products
+3. Retrieve a single Product by ID
+4. Update an existing Prodcut by Id
+5. Delete a Product by ID
+6. User Authentication (Login / Regsiter)
 
 Middleware functions to handle common tasks such as error handling, request logging, and authentication checks.
 
 ## Tech Stack:
 
-Node JS, Express JS , MongoDB , Postman 
+Node JS, Express JS , Postgres , sequelize , Postman 
 
 ## Postman
 
@@ -46,8 +39,9 @@ POST /auth/register
 Request Body
 ```json
 {
-    "email":"Nipun@gmail.com",
-    "Password":"Nipun"
+    "username":"Test",
+    "email":"Test@gmail.com",
+    "password":"Test"
 }
 ```
 
@@ -67,8 +61,8 @@ POST /auth/login
 Request Body
 ```json
 {
-    "email":"Nipun@gmail.com",
-    "Password":"Nipun"
+    "email":"Test@gmail.com",
+    "password":"Test"
 }
 ```
 Response
@@ -81,10 +75,10 @@ Response
 
 ### Tasks Route
 
-#### Create The Task
+#### Create The Product
 
 ```http
-POST /api/CreateTask
+POST /api/CreateProduct
 ```
 
 Request Header
@@ -96,24 +90,22 @@ Request Header
 Request Body
 ```json
 {
-   "title":"hbbcasbcja",
-   "description":"abshbasjcbsjbcaj",
-   "assigneduser":"Nipun",
-   "DueDate":"27/11/23"
-   "completionStatus":"Not Done"
+    "ProductName":"Mobile",
+    "ProductDescription":"One PLus CE4",
+    "Price":20000
 }
 ```
 Response
 ```json
 {
-    "Added Successfully"
+    "message": "Product Created Successfully"
 }
 ```
 
-#### Getting All the Tasks
+#### Getting All the Products
 
 ```http
-GET /api/GetAllTask
+GET /api/GetAllProduct
 ```
 
 Request Header
@@ -126,21 +118,20 @@ Response
 ```json
 [
     {
-        "_id": "6561bd13a01c15b6b5dd518e",
-        "title": "aajcscmaks",
-        "description": "shbdhbsbvdjsjd",
-        "assigneduser": "ssjsnjdnsndjvns",
-        "DueDate": "27/11/2023",
-        "completionStatus": "Not Done",
-        "__v": 0
+        "id": 4,
+        "ProductName": "Mobile",
+        "ProductDescription": "One PLus CE4",
+        "Price": "20000",
+        "createdAt": "2024-05-11T10:53:19.824Z",
+        "updatedAt": "2024-05-11T10:53:19.824Z"
     }
 ]
 ```
 
-#### Getting the Single Task By ID
+#### Getting the Single Product By ID
 
 ```http
-GET /api/GetSingleTask/<TaskId:int>
+GET /api/GetSingleProduct/<TaskId:int>
 ```
 
 Request Header
@@ -151,113 +142,55 @@ Request Header
 Response
 ```json
 {
-    "_id": "6561bd13a01c15b6b5dd518e",
-    "title": "aajcscmaks",
-    "description": "shbdhbsbvdjsjd",
-    "assigneduser": "ssjsnjdnsndjvns",
-    "DueDate": "27/11/2023",
-    "completionStatus": "Not Done",
-    "__v": 0
+    "id": 4,
+    "ProductName": "Mobile",
+    "ProductDescription": "One PLus CE4",
+    "Price": "20000",
+    "createdAt": "2024-05-11T10:53:19.824Z",
+    "updatedAt": "2024-05-11T10:53:19.824Z"
 }
 ```
 
-#### Updating the Specific Task By ID
+#### Updating the Specific Product By ID
 
 ```http
-PATCH /api/UpdateTask/<TaskId:int>
+PATCH /api/UpdateProduct/<TaskId:int>
 ```
-
-Request Header
-| Key          | Value              |
----------------|---------------------
-|Authorization | Bearer <JWT_TOKEN> |
-
-Response
-```json
-{
-    "message":"Task Updated"
-}
-```
-
-#### Deleting the Task By Id
-
-```http
-DELETE /api/DeleteTask/<TaskId:int>
-```
-
-Request Header
-| Key          | Value              |
----------------|---------------------
-|Authorization | Bearer <JWT_TOKEN> |
-
-Response
-```json
-{
-    "message":"Deleted Successfully"
-}
-```
-
-#### Getting the Task Status
-
-```http
-GET /api/TaskStatus
-```
-
-Request Header
-| Key          | Value              |
----------------|---------------------
-|Authorization | Bearer <JWT_TOKEN> |
-
-Response
-```json
-{
-    "completedTasks": [],
-    "pendingTasks": [
-        {
-            "_id": "6561bd13a01c15b6b5dd518e",
-            "title": "aajcscmaks",
-            "description": "shbdhbsbvdjsjd",
-            "assigneduser": "ssjsnjdnsndjvns",
-            "DueDate": "27/11/2023",
-            "completionStatus": "Not Done",
-            "__v": 0
-        }
-    ]
-}
-```
-
-#### Get the catagories
-
-```http
-POST /api/GetCatagories
-```
-
-Request Header
-| Key          | Value              |
----------------|---------------------
-|Authorization | Bearer <JWT_TOKEN> |
-
 
 Request Body
 ```json
 {
-    "Catagories":"Node"
+    "ProductName":"MobilePhone"
 }
 ```
+
+Request Header
+| Key          | Value              |
+---------------|---------------------
+|Authorization | Bearer <JWT_TOKEN> |
+
 Response
 ```json
-[
-    {
-        "_id": "65b2302c163befc3cd6d3ea4",
-        "title": "Node Task",
-        "description": "Create Node Api",
-        "assigneduser": "Nipun",
-        "DueDate": "27/11/23",
-        "completionStatus": "Not done",
-        "Catagories": "Node",
-        "__v": 0
-    }
-]
+{
+    "message": "Product Updated"
+}
 ```
 
+#### Deleting the Product By Id
+
+```http
+DELETE /api/DeleteProduct/<TaskId:int>
+```
+
+Request Header
+| Key          | Value              |
+---------------|---------------------
+|Authorization | Bearer <JWT_TOKEN> |
+
+Response
+```json
+{
+    "message": "Deleted Successfully"
+}
+```
 
